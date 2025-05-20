@@ -5,7 +5,7 @@ const cheerio = require("cheerio");
 
 const app = express();
 app.use(cors({
-  origin: "https://book-recommender-steel.vercel.app/"
+  origin: "https://book-recommender-steel.vercel.app"
 }));
 const PORT = 4000;
 
@@ -16,7 +16,7 @@ app.get("/recommend", async (req, res) => {
   }
 
   const trySearch = async (query) => {
-    const searchUrl = `https://www.goodreads.com/search?q=${encodeURIComponent(query)}`;
+    const searchUrl = `https://www.goodreads.com/search?q=${encodeURIComponent(book.title + " " + book.author)}`;
     try {
       const response = await axios.get(searchUrl, {
         headers: {
