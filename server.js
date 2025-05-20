@@ -4,7 +4,9 @@ const axios = require("axios");
 const cheerio = require("cheerio");
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: "https://book-recommender-steel.vercel.app/"
+}));
 const PORT = 4000;
 
 app.get("/recommend", async (req, res) => {
