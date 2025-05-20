@@ -28,15 +28,19 @@ app.get("/recommend", async (req, res) => {
       const books = [];
 
       $("tr[itemtype='http://schema.org/Book']").each((i, el) => {
-        const title = $(el).find("a.bookTitle span").text().trim();
-        const author = $(el).find("a.authorName span").text().trim();
-        let cover = $(el).find("img").attr("src");
-        cover = cover?.replace(/_S[XY]\d+_/, "_SY475_");
+  try {
+    const title = $(el).find("a.bookTitle span").text().trim();
+    const author = $(el).find("a.authorName span").text().trim();
+    let cover = $(el).find("img").attr("src") || "";
+    cover = cover.replace(/_S[XY]\d+_/, '_SY475_');
 
-        if (title && author && cover) {
-          books.push({ title, author, cover });
-        }
-      });
+    if (title && author && cover) {
+      books.push({ title, author, cover });
+    }
+  } catch (err) {
+    console.error("Failed to parse book element:", err.message);
+  }
+});
 
       return books;
     } catch (err) {
